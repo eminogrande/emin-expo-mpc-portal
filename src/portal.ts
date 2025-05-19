@@ -9,29 +9,17 @@ import Constants from 'expo-constants';
 
 // We injected the client API key through app.config.ts -> extra,
 // which ends up available at runtime inside `Constants`.
-const portalClientApiKey = '708a1e02-d7c0-4719-ba7d-56547be8b4ce';
-const portalClientId = 'cmav0svu40bcqgmqangslo9s1';
+const portalClientApiKey = Constants.expoConfig?.extra?.portalClientApiKey as string;
+const portalClientId = Constants.expoConfig?.extra?.portalClientId as string; // Though not directly used in Portal init, good to fetch it
 
 // Initialize passkey storage for use as a backup method.
 const passkeyStorage = new PasskeyStorage({
   relyingParty: {
-    id: 'portalhq.io',
-    name: 'PortalHQ',
+    id: 'nuri.com', // Use your domain as the relying party ID
+    name: 'Nuri Wallet', // Or your app's name
   },
 });
 
-// Debug: Show Portal credentials at startup
-import { Alert } from 'react-native';
-
-console.log('Portal Client API Key:', portalClientApiKey);
-console.log('Portal Client ID:', portalClientId);
-
-if (portalClientApiKey) {
-  Alert.alert('Portal Client API Key', portalClientApiKey);
-}
-if (portalClientId) {
-  Alert.alert('Portal Client ID', portalClientId);
-}
 
 // "portal" is the object the rest of the app will import.
 // "portal" is the object the rest of the app will import.
@@ -47,11 +35,21 @@ export const portal = new Portal({
 try {
   // @ts-ignore: This method may not be in the TS types
   if (portal.setPasskeyConfiguration) {
+    // @ts-ignore Property 'setPasskeyConfiguration' does not exist on type 'Portal'.
+    // The first argument should be your relying party ID
+    // The second argument is the server endpoint for passkey operations,
+    // if PortalHQ uses a specific one for self-hosted RPs, this might need to be nuri.com or a portalhq subdomain.
+    // For now, assuming it should align with your RP. If issues arise, this might need to be portalhq.io or a specific portal domain.
+    // Let's stick to nuri.com for consistency with the RP ID for now.
+    // If portalhq.io is required here by Portal's SDK despite custom RP, we can revisit.
+    // The documentation implies your domain should work if configured.
     portal.setPasskeyConfiguration(
-      "portalhq.io",
-      "backup.web.portalhq.io"
+      "nuri.com", // Your relying party ID
+      "nuri.com"  // Typically, the domain where passkey operations are handled.
+                  // Or, if PortalHQ still manages some aspects, it might be a PortalHQ domain.
+                  // Let's try nuri.com first. If this causes issues, consult PortalHQ docs for this specific param when using own RP.
     );
-    console.log("Called portal.setPasskeyConfiguration");
+    console.log("Called portal.setPasskeyConfiguration with nuri.com");
   }
 } catch (err) {
   console.error("Error configuring passkey authentication:", err);
@@ -77,21 +75,4 @@ export function setPasskeyAuthenticationAnchorPlaceholder() {
   console.warn(
     "setPasskeyAuthenticationAnchor must be called with your app's main UIWindow. Implement this with a native module."
   );
-}
-
-// Helper to test Portal API key with a minimal call
-export async function testPortalApiKey() {
-  try {
-    // Try a minimal backupWallet call with dummy data
-    const result = await portal.backupWallet(
-      BackupMethods.Passkey,
-      (status: any) => console.log('Test backupWallet status:', status),
-      {}
-    );
-    console.log('Portal backupWallet test result:', result);
-    Alert.alert('Portal API Key Test', 'Success: ' + JSON.stringify(result));
-  } catch (err) {
-    console.error('Portal API Key Test Error:', err);
-    Alert.alert('Portal API Key Test Error', String(err));
-  }
 }

@@ -31,7 +31,7 @@ export default function LoginScreen() {
 
       {/* The single button */}
       <Button
-        title={loading ? 'Working…' : 'Create passkey / Sign in'}
+        title={loading ? 'Working…' : 'Test Passkey Backup'}
         onPress={() => login(email.trim())}
         disabled={!email || loading}
       />

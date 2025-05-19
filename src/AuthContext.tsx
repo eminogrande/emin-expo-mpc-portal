@@ -58,15 +58,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const login = async (email: string) => {
     setLoading(true);
     try {
-      // 2·1  Ask Portal for a WebAuthn challenge.
-      //      (Portal creates the user for us if it doesn't exist.)
-      // 2·1  Register/backup with passkey (creates a new wallet or backup for the user)
+      console.log('[Passkey Debug] login() called with email:', email);
+      console.log('[Passkey Debug] Platform:', Constants.platform, 'Expo config:', Constants.expoConfig);
+
       const backupResult = await portal.backupWallet(
         BackupMethods.Passkey,
-        (status: any) => { console.log('Backup Status: ', status); },
+        (status: any) => { console.log('[Passkey Debug] Backup Status:', status); },
         {}
       );
-      console.log('Backup result:', backupResult);
+      console.log('[Passkey Debug] backupWallet result:', backupResult);
 
       // TODO: Extract user/session info from backupResult if available.
       // For now, just persist a dummy value to avoid crash.
@@ -76,8 +76,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       setUserId('dummy-uid');
       setSessionToken('dummy-token');
     } catch (error) {
-      // Optionally, you could set an error state here to display to the user
-      console.error('Login error:', error);
+      console.error('[Passkey Debug] Login error:', error);
     } finally {
       setLoading(false);
     }

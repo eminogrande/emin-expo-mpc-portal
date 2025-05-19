@@ -6,8 +6,6 @@ import { Text, View } from 'react-native';
 import { AuthProvider, useAuth } from './src/AuthContext';
 import LoginScreen from './src/screens/LoginScreen';
 import Constants from 'expo-constants';
-import { Button } from 'react-native';
-import { testPortalApiKey } from './src/portal';
 
 function Root() {
   const { userId, loading } = useAuth();
@@ -36,7 +34,6 @@ export default function App() {
   return (
     <AuthProvider>
       <Root />
-      <Button title="Test Portal API Key" onPress={testPortalApiKey} />
     </AuthProvider>
   );
 }
