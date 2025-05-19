@@ -1,0 +1,4 @@
+# keep node cruft out of git
+node_modules/
+.env
+.DS_Store
