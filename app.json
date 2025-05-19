@@ -28,6 +28,13 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "portalClientApiKey": "708a1e02-d7c0-4719-ba7d-56547be8b4ce",
+      "portalClientId": "cmav0svu40bcqgmqangslo9s1",
+      "eas": {
+        "projectId": "b33bc579-313c-4f8c-8115-a988c054f892"
+      }
     }
   }
 }
