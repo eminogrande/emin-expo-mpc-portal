@@ -1,20 +1,44 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+// Root component – decides which screen to show
+// ---------------------------------------------
 
-export default function App() {
+import React from 'react';
+import { Text, View } from 'react-native';
+import { AuthProvider, useAuth } from './src/AuthContext';
+import LoginScreen from './src/screens/LoginScreen';
+import Constants from 'expo-constants';
+
+console.log('Portal Secret Key:', Constants.expoConfig?.extra?.portalSecretKey);
+
+
+console.log('Portal Secret Key:', Constants.expoConfig?.extra?.portalSecretKey);
+
+function Root() {
+  const { userId, loading } = useAuth();
+
+  if (loading) {
+    // While we're reading SecureStore
+    return (
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <Text>Booting…</Text>
+      </View>
+    );
+  }
+
+  // Not logged in yet
+  if (!userId) return <LoginScreen />;
+
+  // Logged in – placeholder until we build the Wallet UI
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Text>✅ Logged in as {userId.slice(0, 6)}…</Text>
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default function App() {
+  return (
+    <AuthProvider>
+      <Root />
+    </AuthProvider>
+  );
+}
