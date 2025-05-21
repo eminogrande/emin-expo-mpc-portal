@@ -7,26 +7,26 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		01E476092F47E8454DA51DBB /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 617FFC4523680F484856D0B1 /* PrivacyInfo.xcprivacy */; };
+		138F0ACBF3D4E1204256741A /* libPods-eminexpompcportal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CF07E1AB233649688F20F0C7 /* libPods-eminexpompcportal.a */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
+		15889E8FDCF37500DAE58D43 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AFBCFE19571972E1B384EAA /* ExpoModulesProvider.swift */; };
 		3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */; };
-		3E855DC8BFF542323C9E8F8C /* libPods-eminexpompcportal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 60ADD5195B01476047F08507 /* libPods-eminexpompcportal.a */; };
-		615B0FB0116F4FA62C4A2F31 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC02698A6497420E3621353 /* ExpoModulesProvider.swift */; };
+		B3E3A2843150361CD3ACD221 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 1782B6AC5152CCFA69BF04FE /* PrivacyInfo.xcprivacy */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
 		F11748422D0307B40044C1D9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11748412D0307B40044C1D9 /* AppDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0AFBCFE19571972E1B384EAA /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-eminexpompcportal/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* eminexpompcportal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = eminexpompcportal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = eminexpompcportal/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = eminexpompcportal/Info.plist; sourceTree = "<group>"; };
-		2E4C395B8080F71F3C06D42A /* Pods-eminexpompcportal.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-eminexpompcportal.debug.xcconfig"; path = "Target Support Files/Pods-eminexpompcportal/Pods-eminexpompcportal.debug.xcconfig"; sourceTree = "<group>"; };
-		6055000E76D6ED07559E4D0E /* Pods-eminexpompcportal.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-eminexpompcportal.release.xcconfig"; path = "Target Support Files/Pods-eminexpompcportal/Pods-eminexpompcportal.release.xcconfig"; sourceTree = "<group>"; };
-		60ADD5195B01476047F08507 /* libPods-eminexpompcportal.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-eminexpompcportal.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		617FFC4523680F484856D0B1 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = eminexpompcportal/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		1782B6AC5152CCFA69BF04FE /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = eminexpompcportal/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		50FAD17DCDC496F6F6157859 /* Pods-eminexpompcportal.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-eminexpompcportal.debug.xcconfig"; path = "Target Support Files/Pods-eminexpompcportal/Pods-eminexpompcportal.debug.xcconfig"; sourceTree = "<group>"; };
+		5A2D03B4780294BCCB00614C /* Pods-eminexpompcportal.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-eminexpompcportal.release.xcconfig"; path = "Target Support Files/Pods-eminexpompcportal/Pods-eminexpompcportal.release.xcconfig"; sourceTree = "<group>"; };
 		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = eminexpompcportal/SplashScreen.storyboard; sourceTree = "<group>"; };
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
-		EBC02698A6497420E3621353 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-eminexpompcportal/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
+		CF07E1AB233649688F20F0C7 /* libPods-eminexpompcportal.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-eminexpompcportal.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		F11748412D0307B40044C1D9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = eminexpompcportal/AppDelegate.swift; sourceTree = "<group>"; };
 		F11748442D0722820044C1D9 /* eminexpompcportal-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "eminexpompcportal-Bridging-Header.h"; path = "eminexpompcportal/eminexpompcportal-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -37,7 +37,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3E855DC8BFF542323C9E8F8C /* libPods-eminexpompcportal.a in Frameworks */,
+				138F0ACBF3D4E1204256741A /* libPods-eminexpompcportal.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -53,7 +53,7 @@
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */,
-				617FFC4523680F484856D0B1 /* PrivacyInfo.xcprivacy */,
+				1782B6AC5152CCFA69BF04FE /* PrivacyInfo.xcprivacy */,
 			);
 			name = eminexpompcportal;
 			sourceTree = "<group>";
@@ -62,17 +62,35 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				60ADD5195B01476047F08507 /* libPods-eminexpompcportal.a */,
+				CF07E1AB233649688F20F0C7 /* libPods-eminexpompcportal.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		417BCA0A01C876E5003278BD /* ExpoModulesProviders */ = {
+		36679B510A2A3410C43777DB /* ExpoModulesProviders */ = {
 			isa = PBXGroup;
 			children = (
-				E8C34B6E0CA642829CA4594C /* eminexpompcportal */,
+				72CAE313FD67D49B10828D8E /* eminexpompcportal */,
 			);
 			name = ExpoModulesProviders;
+			sourceTree = "<group>";
+		};
+		72CAE313FD67D49B10828D8E /* eminexpompcportal */ = {
+			isa = PBXGroup;
+			children = (
+				0AFBCFE19571972E1B384EAA /* ExpoModulesProvider.swift */,
+			);
+			name = eminexpompcportal;
+			sourceTree = "<group>";
+		};
+		790CE93420C4FB9199B752D2 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				50FAD17DCDC496F6F6157859 /* Pods-eminexpompcportal.debug.xcconfig */,
+				5A2D03B4780294BCCB00614C /* Pods-eminexpompcportal.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
@@ -89,8 +107,8 @@
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
-				8897FDE088282BDBB91CA6F0 /* Pods */,
-				417BCA0A01C876E5003278BD /* ExpoModulesProviders */,
+				790CE93420C4FB9199B752D2 /* Pods */,
+				36679B510A2A3410C43777DB /* ExpoModulesProviders */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -105,16 +123,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		8897FDE088282BDBB91CA6F0 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				2E4C395B8080F71F3C06D42A /* Pods-eminexpompcportal.debug.xcconfig */,
-				6055000E76D6ED07559E4D0E /* Pods-eminexpompcportal.release.xcconfig */,
-			);
-			name = Pods;
-			path = Pods;
-			sourceTree = "<group>";
-		};
 		BB2F792B24A3F905000567C9 /* Supporting */ = {
 			isa = PBXGroup;
 			children = (
@@ -122,14 +130,6 @@
 			);
 			name = Supporting;
 			path = eminexpompcportal/Supporting;
-			sourceTree = "<group>";
-		};
-		E8C34B6E0CA642829CA4594C /* eminexpompcportal */ = {
-			isa = PBXGroup;
-			children = (
-				EBC02698A6497420E3621353 /* ExpoModulesProvider.swift */,
-			);
-			name = eminexpompcportal;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -140,13 +140,13 @@
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "eminexpompcportal" */;
 			buildPhases = (
 				08A4A3CD28434E44B6B9DE2E /* [CP] Check Pods Manifest.lock */,
-				C4D8146E39C8F450587052A3 /* [Expo] Configure project */,
+				DAF6B16E6AAC56EB599C61B8 /* [Expo] Configure project */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */,
-				B6AFB6D13AFDD9D83628D441 /* [CP] Embed Pods Frameworks */,
+				AA43483CD4A7FD7D7CA13B23 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -167,6 +167,8 @@
 				TargetAttributes = {
 					13B07F861A680F5B00A75B9A = {
 						LastSwiftMigration = 1250;
+						DevelopmentTeam = "XY6W6HZPV5";
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -196,7 +198,7 @@
 				BB2F792D24A3F905000567C9 /* Expo.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
-				01E476092F47E8454DA51DBB /* PrivacyInfo.xcprivacy in Resources */,
+				B3E3A2843150361CD3ACD221 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -276,7 +278,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-eminexpompcportal/Pods-eminexpompcportal-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		B6AFB6D13AFDD9D83628D441 /* [CP] Embed Pods Frameworks */ = {
+		AA43483CD4A7FD7D7CA13B23 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -294,7 +296,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-eminexpompcportal/Pods-eminexpompcportal-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C4D8146E39C8F450587052A3 /* [Expo] Configure project */ = {
+		DAF6B16E6AAC56EB599C61B8 /* [Expo] Configure project */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
@@ -321,7 +323,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F11748422D0307B40044C1D9 /* AppDelegate.swift in Sources */,
-				615B0FB0116F4FA62C4A2F31 /* ExpoModulesProvider.swift in Sources */,
+				15889E8FDCF37500DAE58D43 /* ExpoModulesProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -330,7 +332,7 @@
 /* Begin XCBuildConfiguration section */
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2E4C395B8080F71F3C06D42A /* Pods-eminexpompcportal.debug.xcconfig */;
+			baseConfigurationReference = 50FAD17DCDC496F6F6157859 /* Pods-eminexpompcportal.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -361,12 +363,15 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
+				DEVELOPMENT_TEAM = "XY6W6HZPV5";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 			};
 			name = Debug;
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6055000E76D6ED07559E4D0E /* Pods-eminexpompcportal.release.xcconfig */;
+			baseConfigurationReference = 5A2D03B4780294BCCB00614C /* Pods-eminexpompcportal.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -391,6 +396,9 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
+				DEVELOPMENT_TEAM = "XY6W6HZPV5";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 			};
 			name = Release;
 		};

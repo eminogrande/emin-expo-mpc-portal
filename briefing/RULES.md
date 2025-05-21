@@ -51,3 +51,29 @@ This document outlines the agreed-upon rules for the development of this project
     *   **Immediate Testing:** After any such change, an immediate test build (e.g., local `npx expo run:ios/android` or a targeted EAS development build) must be performed to verify the system remains operational and the change had the intended effect without unintended side effects.
     *   **Iterative Approach:** Prefer small, incremental changes with testing after each step over large, bundled changes to build configurations.
     *   *(Learned from Task 003/005 - `ios` directory and `.gitignore` interaction leading to "No Podfile" build errors).*
+
+---
+
+**8. Pre-Change & Pre-Build Checklists (Collaborative Safeguard):**
+    *   **Purpose:** To minimize errors and ensure shared understanding before critical actions.
+    *   **Before Modifying Build-Critical Configurations (see Rule 7):**
+        *   [ ] **Understand Impact:** Clearly articulate the intended change and its expected impact on local dev, EAS builds, and native projects.
+        *   [ ] **Review Relevant Docs/Tasks:** Check `PROJECT_DESCRIPTION_AND_PLAN.md`, `briefing/RULES.md`, related tasks in `briefing/tasks/`, and `COMPLETED_SETUP_LOG.md` for relevant history or guidelines.
+        *   [ ] **Backup Strategy:** If modifying local uncommitted files (e.g., native directories before a `--clean` prebuild), ensure a backup or recovery plan exists.
+        *   [ ] **Incremental Steps:** Plan the change in the smallest possible increments.
+    *   **Before Initiating an EAS Build (especially after changes):**
+        *   [ ] **Verify Git Status:** Ensure all intended changes are committed and pushed to the correct branch.
+        *   [ ] **Confirm Profile:** Double-check the correct EAS build profile (`development`, `production`, etc.) is being used.
+        *   [ ] **Check `expo doctor`:** Run `npx expo-doctor` locally to catch any new project configuration issues.
+        *   [ ] **Review Recent Changes:** Briefly review the latest commits/changes that might impact the build.
+    *   **AI Assistant (Cline) Adherence:** Cline must mentally (or explicitly if complex) go through relevant checklist items before proposing or executing critical actions.
+
+**9. Project Diary & Contextual Review (Continuous Learning):**
+    *   **Purpose:** To maintain a collective memory of the project's evolution, decisions, and learnings, protecting new and existing team members from repeating past mistakes.
+    *   **Routine Practice:** Before starting a new task, when troubleshooting, or when proposing significant changes, all team members (including AI assistants) *must* review:
+        *   The current task definition.
+        *   Related past tasks in `briefing/tasks/`.
+        *   Entries in `briefing/COMPLETED_SETUP_LOG.md` relevant to the components or systems being worked on.
+        *   Current project rules in `briefing/RULES.md`.
+    *   **Documentation as Diary:** Treat task files and the `COMPLETED_SETUP_LOG.md` as a living "project diary." Entries should be clear, concise, and capture not just *what* was done, but *why* and what was *learned*.
+    *   **Onboarding:** This practice is critical for onboarding new members, allowing them to understand the project's history and rationale behind current states.

@@ -2,11 +2,11 @@ import 'dotenv/config';
 
 export default () => ({
   expo: {
-    name: 'emin-expo-mpc-portal',
+    name: 'Nuri Bitcoin Wallet',
     slug: 'emin-expo-mpc-portal',
-    version: '0.0.2', // Set app version
+    version: '0.0.3', // Set app version
     orientation: 'portrait',
-    icon: './assets/1024x1024-nuri-logo.png', // Set app icon
+    icon: './assets/icon.png', // Set app icon
     userInterfaceStyle: 'light',
     newArchEnabled: true,
     splash: {
@@ -24,6 +24,7 @@ export default () => ({
       supportsTablet: true,
       infoPlist: {
         ITSAppUsesNonExemptEncryption: false,  // ← tells Apple: “standard encryption only”
+        CFBundleDisplayName: 'Nuri Bitcoin Wallet',
       },
     },
 

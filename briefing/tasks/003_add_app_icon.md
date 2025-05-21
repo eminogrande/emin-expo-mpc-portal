@@ -1,7 +1,7 @@
 # Task 003: Add Application Icon
 
 **ID:** 003
-**Status:** To Do
+**Status:** Done (iOS), Android Deferred
 **Priority:** Medium
 **Assignee:** (To be assigned)
 **Related Section in PROJECT_DESCRIPTION_AND_PLAN.md:** General App Polish/Branding
@@ -37,30 +37,35 @@ The application currently uses placeholder icons. This task is to add a custom a
 ## Detailed Sub-Tasks:
 
 1.  **User Provides Icon Asset(s):**
-    *   [ ] User to provide the primary icon image (1024x1024 PNG) to be placed at `./assets/app-icon.png` (or similar).
+    *   [x] User provided primary icon image (`assets/icon.png`).
+    *   [x] User provided splash screen image (`assets/splash-icon.png`).
     *   [ ] (DEFERRED) User to provide the foreground image for the Android adaptive icon (1024x1024 PNG) to be placed at `./assets/adaptive-icon-foreground.png` (or similar) and specify a background color.
 
 2.  **Integrate Icon into Project:**
-    *   [x] Primary icon image (`./assets/1024x1024-nuri-logo.png`) is present in the `./assets/` directory. (Assuming this is the intended `app-icon.png`)
+    *   [x] Primary icon image (`./assets/icon.png`) is present in the `./assets/` directory.
+    *   [x] Splash screen image (`./assets/splash-icon.png`) is present in the `./assets/` directory.
     *   [x] Open `app.config.ts`.
-    *   [x] The `expo.icon` property correctly points to `'./assets/1024x1024-nuri-logo.png'`.
+    *   [x] The `expo.icon` property correctly points to `'./assets/icon.png'`.
+    *   [x] The `expo.splash.image` property correctly points to `'./assets/splash-icon.png'`.
     *   [ ] (DEFERRED) Add/update the `expo.android.adaptiveIcon` object.
     *   [x] Ensure the `expo.ios.icon` is not separately defined if the main `expo.icon` is intended for both, or update it specifically if needed. (Current `expo.icon` suffices for iOS).
 
 ## Testing Steps & Acceptance Criteria:
 
 1.  **Build and Run the Application:**
-    *   [ ] After updating `app.config.ts` and adding the image files, run the app on an iOS simulator/device (`npx expo run:ios` or a development build).
+    *   [x] After updating `app.config.ts` and adding the image files, ran `npx expo prebuild --platform ios --clean`.
+    *   [x] User committed changes and ran EAS Build.
+    *   [x] User ran `npx expo run:ios` locally.
     *   [ ] (DEFERRED) Run the app on an Android emulator/device.
 2.  **Verify Icon Display:**
-    *   [ ] **iOS:** Confirm the new app icon is displayed correctly on the home screen and in any other relevant system UI (e.g., settings, notifications).
+    *   [x] **iOS:** User confirmed the new app icon and splash icon are displayed correctly on the home screen and in App Store Connect listing.
     *   [ ] (DEFERRED) **Android:** Confirm the new app icon displays correctly.
-    *   [ ] The icon should be clear and not pixelated on various device resolutions.
+    *   [x] The icon is clear and not pixelated on various device resolutions.
 
 ## Acceptance Criteria:
 
-*   [x] The `app.config.ts` is updated to reference the new primary icon file (`./assets/1024x1024-nuri-logo.png`).
-*   [ ] The new app icon is correctly displayed on iOS devices/simulators.
+*   [x] The `app.config.ts` is updated to reference the new icon and splash image files (`./assets/icon.png`, `./assets/splash-icon.png`).
+*   [x] The new app icon and splash icon are correctly displayed on iOS.
 *   [ ] (DEFERRED) Android adaptive icons display correctly.
 
 ---
