@@ -4,16 +4,33 @@ export default () => ({
   expo: {
     name: 'emin-expo-mpc-portal',
     slug: 'emin-expo-mpc-portal',
+    version: '0.0.2', // Set app version
+    orientation: 'portrait',
+    icon: './assets/1024x1024-nuri-logo.png', // Set app icon
+    userInterfaceStyle: 'light',
+    newArchEnabled: true,
+    splash: {
+      image: './assets/splash-icon.png',
+      resizeMode: 'contain',
+      backgroundColor: '#ffffff',
+    },
+    web: {
+      favicon: './assets/favicon.png',
+    },
 
      ios: {
       associatedDomains: ['webcredentials:nuri.com'],
-      bundleIdentifier: 'MH2SRQ3N27.com.nuriwallet.mpcportal',  
+      bundleIdentifier: 'MH2SRQ3N27.com.nuriwallet.mpcportal',
+      supportsTablet: true,
       infoPlist: {
         ITSAppUsesNonExemptEncryption: false,  // ← tells Apple: “standard encryption only”
       },
     },
 
-    android: { package: 'MH2SRQ3N27.com.nuriwallet.mpcportal' },
+    android: {
+      package: 'MH2SRQ3N27.com.nuriwallet.mpcportal',
+      edgeToEdgeEnabled: true,
+    },
 
     extra: {
       // Portal credentials

@@ -2,38 +2,76 @@
 // ---------------------------------------------
 
 import React from 'react';
-import { Text, View } from 'react-native';
-import { AuthProvider, useAuth } from './src/AuthContext';
-import LoginScreen from './src/screens/LoginScreen';
-import Constants from 'expo-constants';
+import { Text, View, StyleSheet } from 'react-native';
+import { WalletProvider, useWallet } from './src/AuthContext'; // AuthContext.tsx now exports WalletProvider and useWallet
+import PortalStatusIndicator from './src/components/PortalStatusIndicator';
 
-function Root() {
-  const { userId, loading } = useAuth();
-
-  if (loading) {
-    // While we're reading SecureStore
-    return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>Booting…</Text>
-      </View>
-    );
-  }
-
-  // Not logged in yet
-  if (!userId) return <LoginScreen />;
-
-  // Logged in – placeholder until we build the Wallet UI
+// Placeholder for InitialWalletSetupScreen
+// This screen will later handle automatic wallet creation.
+function InitialWalletSetupPlaceholder() {
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>✅ Logged in as {userId.slice(0, 6)}…</Text>
+    <View style={styles.container}>
+      <Text style={styles.text}>No Wallet Detected.</Text>
+      <Text style={styles.text}>Preparing for initial wallet setup...</Text>
+      {/* In a subsequent task, this screen would trigger portal.createWallet() */}
     </View>
   );
 }
 
-export default function App() {
+// Placeholder for WalletDisplayScreen
+// This screen will later display the wallet address and backup options.
+function WalletDisplayPlaceholder() {
+  const { walletAddress } = useWallet(); // To show the address if needed
   return (
-    <AuthProvider>
-      <Root />
-    </AuthProvider>
+    <View style={styles.container}>
+      <Text style={styles.text}>Wallet Exists!</Text>
+      {walletAddress && <Text style={styles.text}>Address: {walletAddress}</Text>}
+      <Text style={styles.text}>Display Screen Placeholder</Text>
+      {/* In a subsequent task, this screen would show address and backup button */}
+    </View>
   );
 }
+
+function Root() {
+  const { hasWallet, loading } = useWallet();
+
+  if (loading) {
+    // While we're reading SecureStore from WalletContext
+    return (
+      <View style={styles.container}>
+        <Text style={styles.text}>Booting Wallet…</Text>
+      </View>
+    );
+  }
+
+  if (hasWallet) {
+    return <WalletDisplayPlaceholder />;
+  } else {
+    return <InitialWalletSetupPlaceholder />;
+  }
+}
+
+export default function App() {
+  return (
+    <WalletProvider>
+      <View style={{ flex: 1 }}>
+        <Root />
+        <PortalStatusIndicator />
+      </View>
+    </WalletProvider>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 20,
+  },
+  text: {
+    fontSize: 16,
+    textAlign: 'center',
+    marginBottom: 10,
+  },
+});

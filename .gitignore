@@ -35,3 +35,7 @@ yarn-error.*
 
 # typescript
 *.tsbuildinfo
+
+# Expo Prebuild - allow app.config.ts to manage native folders
+# /ios/ temporarily re-included for build fix
+/android/

@@ -1,100 +1,112 @@
-// React Context that exposes login / logout and keeps auth state.
+// React Context that manages wallet state for an auth-less POC.
 // --------------------------------------------------------------
-//
-// Why not Redux, Zustand…?  Context is enough for 2-3 values and
-// avoids extra libraries for this POC.
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import * as SecureStore from 'expo-secure-store';      // encrypted key-value store
-import { portal } from './portal';                     // our singleton
-import { create, get } from 'react-native-passkeys';
-import { BackupMethods } from '@portal-hq/core';
-import Constants from 'expo-constants';
+import { portal, getPortalInitializationError } from './portal'; // Import portal and error checker
 
 // ------------
 // Type helpers
 // ------------
-type AuthState = {
-  userId: string | null;
-  sessionToken: string | null;
-  loading: boolean;
-  login: (email: string) => Promise<void>;
-  logout: () => Promise<void>;
+type WalletState = {
+  hasWallet: boolean;
+  walletAddress: string | null;
+  isPortalConnected: boolean | null; // New state for Portal connection status
+  loading: boolean; // Indicates if loading from SecureStore is complete
+  setWalletData: (address: string | null, walletExists: boolean) => Promise<void>;
+  clearWalletData: () => Promise<void>; // For resetting app state for testing/POC
 };
 
 // Create the Context with a dummy default; we'll override in the provider.
-const Ctx = createContext<AuthState>({} as AuthState);
-export const useAuth = () => useContext(Ctx);
+const WalletContext = createContext<WalletState>({} as WalletState); // Renamed Ctx
+export const useWallet = () => useContext(WalletContext); // Renamed useAuth
 
 // ---------------------------
 // Provider component itself
 // ---------------------------
-export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
+export const WalletProvider: React.FC<{ children: React.ReactNode }> = ({ // Renamed AuthProvider
   children,
 }) => {
-  // Three bits of state the whole app may need:
-  const [userId, setUserId] = useState<string | null>(null);
-  const [sessionToken, setSessionToken] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [hasWallet, setHasWallet] = useState<boolean>(false);
+  const [walletAddress, setWalletAddress] = useState<string | null>(null);
+  const [isPortalConnected, setIsPortalConnected] = useState<boolean | null>(null); // Init state
+  const [loading, setLoading] = useState(true); // To know when SecureStore loading is done
 
-  // -------------------------------------------------
-  // 1. On app launch try to restore a saved session
-  // -------------------------------------------------
+  // On app launch, try to restore saved wallet state and check Portal connection
   useEffect(() => {
     (async () => {
-      const uid = await SecureStore.getItemAsync('uid');
-      const token = await SecureStore.getItemAsync('token');
-      if (uid && token) {
-        setUserId(uid);
-        setSessionToken(token);
+      try {
+        const storedHasWallet = await SecureStore.getItemAsync('hasWallet');
+        const storedWalletAddress = await SecureStore.getItemAsync('walletAddress');
+
+        if (storedHasWallet === 'true') {
+          setHasWallet(true);
+          setWalletAddress(storedWalletAddress); // This can be null if that's what was stored
+        } else {
+          // Defaults if nothing stored or 'hasWallet' is not 'true'
+          setHasWallet(false);
+          setWalletAddress(null);
+        }
+      } catch (e) {
+        console.error("[WalletContext] Failed to load wallet state from SecureStore:", e);
+        // Set to default state in case of error
+        setHasWallet(false);
+        setWalletAddress(null);
+      } finally {
+        // Check Portal SDK initialization status after attempting to load other state
+        if (portal) {
+          setIsPortalConnected(true);
+          console.log("[WalletContext] Portal SDK connection verified.");
+        } else {
+          const initError = getPortalInitializationError();
+          if (initError) {
+            console.error("[WalletContext] Portal SDK failed to initialize:", initError.message);
+          } else {
+            console.error("[WalletContext] Portal SDK instance is null without a specific init error.");
+          }
+          setIsPortalConnected(false);
+        }
+        setLoading(false); // Finished all loading attempts
       }
-      setLoading(false);  // whatever happened, boot is finished
     })();
   }, []);
 
-  // ---------------------------------
-  // 2. "login" does register + auth
-  // ---------------------------------
-  const login = async (email: string) => {
-    setLoading(true);
+  // Function to update wallet data and persist to SecureStore
+  const setWalletData = async (address: string | null, walletExists: boolean) => {
     try {
-      console.log('[Passkey Debug] login() called with email:', email);
-      console.log('[Passkey Debug] Platform:', Constants.platform, 'Expo config:', Constants.expoConfig);
-
-      const backupResult = await portal.backupWallet(
-        BackupMethods.Passkey,
-        (status: any) => { console.log('[Passkey Debug] Backup Status:', status); },
-        {}
-      );
-      console.log('[Passkey Debug] backupWallet result:', backupResult);
-
-      // TODO: Extract user/session info from backupResult if available.
-      // For now, just persist a dummy value to avoid crash.
-      await SecureStore.setItemAsync('uid', 'dummy-uid');
-      await SecureStore.setItemAsync('token', 'dummy-token');
-
-      setUserId('dummy-uid');
-      setSessionToken('dummy-token');
-    } catch (error) {
-      console.error('[Passkey Debug] Login error:', error);
-    } finally {
-      setLoading(false);
+      setWalletAddress(address);
+      setHasWallet(walletExists);
+      if (walletExists && address !== null) {
+        await SecureStore.setItemAsync('walletAddress', address);
+      } else {
+        // If wallet doesn't exist or address is null, remove or store empty
+        await SecureStore.deleteItemAsync('walletAddress');
+      }
+      await SecureStore.setItemAsync('hasWallet', walletExists ? 'true' : 'false');
+      console.log(`[WalletContext] Wallet data ${walletExists ? 'saved' : 'cleared'}. Address: ${address}, HasWallet: ${walletExists}`);
+    } catch (e) {
+      console.error("[WalletContext] Failed to save wallet state to SecureStore:", e);
     }
   };
 
-  // ---------------------------------
-  // 3. Simple logout helper
-  // ---------------------------------
-  const logout = async () => {
-    await SecureStore.deleteItemAsync('uid');
-    await SecureStore.deleteItemAsync('token');
-    setUserId(null);
-    setSessionToken(null);
+  // Function to clear all wallet data (for testing/resetting POC)
+  const clearWalletData = async () => {
+    try {
+      await SecureStore.deleteItemAsync('walletAddress');
+      await SecureStore.deleteItemAsync('hasWallet');
+      setWalletAddress(null);
+      setHasWallet(false);
+      // Optionally, could also reset isPortalConnected here if a full app "reset" is implied,
+      // but typically SDK init status is an app-load concern.
+      console.log("[WalletContext] All wallet data cleared from SecureStore and context.");
+    } catch (e) {
+      console.error("[WalletContext] Failed to clear wallet state from SecureStore:", e);
+    }
   };
 
   return (
-    <Ctx.Provider value={{ userId, sessionToken, loading, login, logout }}>
+    <WalletContext.Provider value={{ hasWallet, walletAddress, isPortalConnected, loading, setWalletData, clearWalletData }}>
       {children}
-    </Ctx.Provider>
+    </WalletContext.Provider>
   );
 };

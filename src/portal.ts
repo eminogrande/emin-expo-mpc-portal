@@ -12,6 +12,9 @@ import Constants from 'expo-constants';
 const portalClientApiKey = Constants.expoConfig?.extra?.portalClientApiKey as string;
 const portalClientId = Constants.expoConfig?.extra?.portalClientId as string; // Though not directly used in Portal init, good to fetch it
 
+console.log('[TASK 001 VERIFY] Loaded Portal Client API Key:', portalClientApiKey);
+console.log('[TASK 001 VERIFY] Loaded Portal Client ID:', portalClientId); // Also log this for completeness
+
 // Initialize passkey storage for use as a backup method.
 const passkeyStorage = new PasskeyStorage({
   relyingParty: {
@@ -20,40 +23,55 @@ const passkeyStorage = new PasskeyStorage({
   },
 });
 
+let portalInstance: Portal | null = null;
+let portalInitializationError: Error | null = null;
 
-// "portal" is the object the rest of the app will import.
-// "portal" is the object the rest of the app will import.
-export const portal = new Portal({
-  apiKey: portalClientApiKey,
-  backup: {
-    [BackupMethods.Passkey]: passkeyStorage,
-  },
-  gatewayConfig: {},
-});
-
-// Set passkey configuration for backup/recovery (iOS 16+)
 try {
-  // @ts-ignore: This method may not be in the TS types
-  if (portal.setPasskeyConfiguration) {
-    // @ts-ignore Property 'setPasskeyConfiguration' does not exist on type 'Portal'.
-    // The first argument should be your relying party ID
-    // The second argument is the server endpoint for passkey operations,
-    // if PortalHQ uses a specific one for self-hosted RPs, this might need to be nuri.com or a portalhq subdomain.
-    // For now, assuming it should align with your RP. If issues arise, this might need to be portalhq.io or a specific portal domain.
-    // Let's stick to nuri.com for consistency with the RP ID for now.
-    // If portalhq.io is required here by Portal's SDK despite custom RP, we can revisit.
-    // The documentation implies your domain should work if configured.
-    portal.setPasskeyConfiguration(
-      "nuri.com", // Your relying party ID
-      "nuri.com"  // Typically, the domain where passkey operations are handled.
-                  // Or, if PortalHQ still manages some aspects, it might be a PortalHQ domain.
-                  // Let's try nuri.com first. If this causes issues, consult PortalHQ docs for this specific param when using own RP.
-    );
-    console.log("Called portal.setPasskeyConfiguration with nuri.com");
+  if (!portalClientApiKey) {
+    throw new Error("Portal Client API Key is missing or undefined.");
   }
-} catch (err) {
-  console.error("Error configuring passkey authentication:", err);
+  portalInstance = new Portal({
+    apiKey: portalClientApiKey,
+    backup: {
+      [BackupMethods.Passkey]: passkeyStorage,
+    },
+    gatewayConfig: {},
+    // autoCreateClient: true, // Consider if client auto-creation is desired/needed
+  });
+  console.log('[TASK 001 VERIFY] Portal SDK instantiated successfully.');
+
+  // Set passkey configuration for backup/recovery (iOS 16+)
+  // This should only be attempted if portalInstance is valid
+  // INFO: The method `setPasskeyConfiguration` on `portalInstance` is causing a TypeScript error
+  // as it's not found on the `Portal` type from `@portal-hq/core`.
+  // Local SDK documentation (`portal-sdk-docs/`) does not clarify this method for the `Portal` instance.
+  // Commenting out this block to allow core SDK instantiation verification.
+  // This specific configuration may need to be revisited if passkey backup functionality (a later task)
+  // requires it and further documentation or examples clarify its correct usage.
+  /*
+  if (portalInstance && portalInstance.setPasskeyConfiguration) { // This line causes TS error
+    try {
+      // @ts-ignore: This method may not be in the TS types for all versions
+      portalInstance.setPasskeyConfiguration(
+        "nuri.com", // Your relying party ID
+        "nuri.com"  // Typically, the domain where passkey operations are handled.
+      );
+      console.log("[TASK 001 VERIFY] Called portal.setPasskeyConfiguration with nuri.com");
+    } catch (configErr) {
+      console.error("[TASK 001 VERIFY] Error calling setPasskeyConfiguration:", configErr);
+    }
+  } else if (portalInstance && !portalInstance.setPasskeyConfiguration) { // This line also causes TS error
+    console.warn("[TASK 001 VERIFY] portal.setPasskeyConfiguration method not found on Portal instance. Skipping.");
+  }
+  */
+
+} catch (error: any) {
+  console.error('[TASK 001 VERIFY] Error instantiating Portal SDK:', error);
+  portalInitializationError = error;
 }
+
+export const portal = portalInstance;
+export const getPortalInitializationError = (): Error | null => portalInitializationError;
 
 // Placeholder for setting the passkey authentication anchor (iOS 16+)
 // In a real app, you must implement a native module to expose the UIWindow reference to JS.
