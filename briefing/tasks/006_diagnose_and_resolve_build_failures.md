@@ -1,7 +1,7 @@
 # Task 006: Diagnose, Resolve, and Document Build Failures ("No Podfile Found")
 
 **ID:** 006
-**Status:** In Progress
+**Status:** Resolved
 **Priority:** Critical
 **Assignee:** Cline
 **Related Task(s):** 003 (Add Application Icon), 005 (Fix Expo Doctor Errors)
@@ -49,17 +49,13 @@ This task documents the troubleshooting process for a recurring "No 'Podfile' fo
 
 ## Next Steps (Pending Current Build Outcome):
 
-*   [ ] Monitor the current EAS production build.
-*   [ ] If successful:
-    *   [ ] Verify the app icon is correctly displayed on an iOS device/simulator (completes a key part of Task 003).
-    *   [ ] Decide on the long-term strategy for native directory management (Option A or B above) and adjust `.gitignore` and project workflow accordingly. Document this decision.
-    *   [ ] Complete Task 003 documentation.
-*   [ ] If failed:
-    *   [ ] Analyze new error messages.
-    *   [ ] Consider checking `eas.json` for relevant build profile configurations.
-    *   [ ] Consider clearing EAS build cache.
+*   [x] Monitored EAS production build (0.0.3). It was successfully delivered to App Store Connect.
+*   [x] User confirmed app icon, splash icon, display name, and version are correct in TestFlight build 0.0.3.
+*   [x] Decided on the long-term strategy for native directory management: Option A (gitignore native folders `/ios/` and `/android/` and rely on EAS prebuild). This was successfully tested in Task 008.
+*   [x] Task 003 (iOS icon) documentation updated.
+*   Note: TestFlight sidebar/list view icon may experience cache delays on Apple's side, but the installed app icon is correct.
 
 ---
 ## Post-Completion Documentation Sub-Tasks:
-*   [ ] Update `briefing/COMPLETED_SETUP_LOG.md` with a summary of this task's completion, including the final resolution and key learnings.
+*   [ ] Update `briefing/COMPLETED_SETUP_LOG.md` with a summary of this task's completion, including the final resolution (transition to managed workflow) and key learnings.
 *   [ ] Document any new manual verification steps or insights in `briefing/TESTS.md`.

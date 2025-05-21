@@ -2,8 +2,20 @@
 
 This document outlines the agreed-upon rules for the development of this project.
 
-**1. Task Definition Before Action:**
-    All development work must be based on a task that is first defined as an issue-style document in the `/tasks` directory. This task document must include a clear description and acceptance criteria before any implementation begins.
+**1. Task Definition Before Action (Comprehensive & Self-Contained):**
+    All development work must be based on a task that is first defined as an issue-style document in the `/tasks` directory. This task document must be as self-contained and informative as possible, including:
+    *   A clear, concise **ID, Status, Priority, Assignee.**
+    *   A clear **Description** of the problem or feature.
+    *   A specific **Objective**.
+    *   **Relevant Context & Documentation:**
+        *   Direct links or precise references to any external SDK documentation or specific internal project documents (e.g., `briefing/portal-sdk-docs/specific_doc.md`, `PROJECT_DESCRIPTION_AND_PLAN.md`).
+        *   A "Touches Areas" field listing key files or modules likely to be modified (e.g., `App.tsx`, `src/AuthContext.tsx`).
+    *   **Dependencies:** A clear "Dependencies: Task XXX, Task YYY" field if the task relies on other tasks being completed first.
+    *   Detailed, actionable **Sub-Tasks** for implementation.
+    *   Clear **Testing Steps & Acceptance Criteria** (covering manual verification and definitions for automated tests, as per Rule #6).
+    *   All standard **Post-Completion Documentation Sub-Tasks** (as per Rule #5, #6).
+    *   **Versioning** information (as per Rule #4).
+    *   *(AI Assistant (Cline) Responsibility: Cline will endeavor to include this contextual information when drafting new tasks, adhering to Rule #11 (Small Tasks) and Rule #12 (Explicit Briefing). Cline will also verify that stated dependencies are met or confirm with the user before proceeding with task implementation.)*
 
 **2. Rule Creation:**
     The AI assistant will not create or suggest new rules beyond those explicitly provided by the user. All project rules must originate from the user.
@@ -32,6 +44,14 @@ This document outlines the agreed-upon rules for the development of this project
     *   Every task that involves code changes or introduces new functionality must include specific testing steps, encompassing both manual verification and automated tests where applicable.
     *   These tests must pass for the task to be considered complete.
     *   Each task definition in the `briefing/tasks/` directory must clearly outline its "Testing Steps & Acceptance Criteria."
+
+    *   **Comprehensive Feedback for Debugging and Verification:**
+        *   **Console Logging:** Critical operations, API calls, SDK interactions, and significant state changes should include descriptive console logs (e.g., `console.log` for success/info, `console.error` for errors) to aid local debugging. Task definitions should specify key information to be logged.
+        *   **In-App Feedback (Especially for Device/TestFlight Testing):** For operations whose success/failure is not immediately obvious in the UI (e.g., background API calls, SDK interactions like wallet creation), and especially when testing on physical devices via TestFlight where console logs are hard to access:
+            *   Tasks should include implementing temporary or permanent in-app visual feedback (e.g., status messages, loading indicators, success/error alerts or text displays).
+            *   This ensures the outcome of the operation can be verified directly within the app during testing.
+            *   If feedback is temporary for debugging, a follow-up sub-task to remove or refine it should be considered.
+        *   **Automated Tests:** (As already defined below)
     *   **Automated Tests:**
         *   For tasks involving new or modified application logic or UI components, corresponding automated tests (e.g., unit, integration using a framework like Jest) must be written.
         *   Automated test files should reside in a dedicated `__tests__/` directory at the project root, with clear naming conventions (e.g., `FileName.test.tsx`).
@@ -42,6 +62,7 @@ This document outlines the agreed-upon rules for the development of this project
             *   The purpose of each test (what it verifies).
             *   A simple description of how the test works.
         *   Each task definition in `briefing/tasks/*.md` that introduces or modifies tests (manual or automated) must include a sub-task: `[ ] Document this task's test(s) and their workings in briefing/TESTS.md.`
+    *   **Immediate Post-Change Verification:** After any code modification by Cline, a quick manual check of the directly affected UI/functionality must be performed by the user. If the change impacts a file modified by a recent, dependent task, the user should also verify that the prior task's core functionality remains intact. Cline will prompt for this verification.
 
 ---
 
@@ -88,3 +109,49 @@ This document outlines the agreed-upon rules for the development of this project
         *   Major sub-steps within a complex task can also be committed incrementally.
         *   This practice ensures that the project's Git history aligns with the task-based workflow, providing clear checkpoints and making it easier to roll back to a state before a specific task's changes if necessary.
     *   **AI Assistant (Cline) Responsibility:** When guiding through changes, Cline will remind the user to commit changes related to the current task before moving to significantly different work or concluding a task.
+
+---
+
+**11. Small, Digestible Tasks with Clear Dependencies:**
+    *   **Purpose:** To ensure changes are minimal, easily testable, and manageable. Promotes iterative development and reduces risk.
+    *   **Practice:**
+        *   Break down larger features or objectives into the smallest possible, independently completable and testable tasks.
+        *   Each task should ideally correspond to a single conceptual change or a very small set of related changes.
+        *   If a task has dependencies on other tasks (i.e., it cannot be started or completed until another task is done), these dependencies must be clearly stated in the task description (e.g., "Depends on: Task 00X").
+        *   Each task should clearly outline which areas of the codebase it touches.
+        *   Prefer more, smaller tasks over fewer, larger tasks.
+    *   **Alignment with Git Workflow:** Each completed task should ideally result in a focused Pull Request (PR) if using a PR-based workflow, and its changes committed with a reference to the Task ID.
+    *   **AI Assistant (Cline) Responsibility:** Cline will strive to define tasks in this granular manner and will highlight dependencies.
+    *   **Task Scope and Non-Regression:** When a task modifies existing code, its scope must be strictly limited to the new functionality. It must not regress or remove functionality implemented in prior, dependent tasks unless explicitly stated as an objective of the current task. Acceptance criteria should reflect this, and Cline will aim to verify this non-regression.
+
+---
+
+**12. Strict Adherence to Explicit Task Briefing in Task Definition and Implementation:**
+    *   **Purpose:** To ensure the AI assistant (Cline) does not introduce unrequested features, UI elements, or logic into task definitions or during implementation.
+    *   **Practice for Task Definition:**
+        *   When defining a new task based on user request, Cline must only include objectives, sub-tasks, and acceptance criteria that directly correspond to what the user has explicitly stated or asked for.
+        *   Avoid adding "nice-to-have" features, placeholder UI elements (like status messages unless requested), or speculative logic (like navigation flows not yet discussed) into the task definition.
+    *   **Practice for Implementation:**
+        *   When executing a task, Cline must implement *only* what is defined in that task's "Detailed Sub-Tasks" and meet its "Acceptance Criteria."
+        *   If Cline believes additional elements are beneficial, they should be proposed to the user as a *separate, potential follow-up task* rather than being incorporated into the current one without explicit approval.
+    *   **Clarity over Assumption:** If the user's request is brief, Cline should ask clarifying questions to ensure the task scope is well-understood before defining it, rather than making assumptions.
+
+---
+
+**13. Cline's Operational Ethos: Precision, Diligence, and Rule Adherence:**
+    *   **Purpose:** To define the expected working style of the AI assistant (Cline) to maximize accuracy and reliability.
+    *   **Principles:**
+        *   **Critical Thinking & Diligence:** Before proposing actions (especially code changes or new task definitions), Cline will internally review all relevant rules, context, recent changes, and potential impacts. This includes "over-thinking" potential failure points or regressions.
+        *   **Get it Right the First Time:** While iteration is part of development, the goal is to maximize the chances of the *first attempt* at a task's implementation being correct by thorough planning and adherence to defined processes.
+        *   **No Over-Engineering / Strict Scope Adherence:** Cline will strictly adhere to the defined scope of the current task (Rule #11, #12) and avoid introducing complexity or features not explicitly requested.
+        *   **Unyielding Rule Adherence:** All defined project rules in `briefing/RULES.md` are paramount and must be followed meticulously.
+        *   **Proactive Verification:** Cline will proactively suggest verification steps (manual or automated) after changes and will highlight if a proposed change might conflict with existing functionality or rules.
+
+---
+
+**14. Precision in Code Modification Tools (`replace_in_file`):**
+    *   **Purpose:** To minimize the risk of unintended side effects when modifying files.
+    *   **Practice:**
+        *   When using tools like `replace_in_file`, the `SEARCH` block must be as minimal and precise as possible to target *only* the lines intended for modification.
+        *   Context lines around the change should be used judiciously for uniqueness but not so broadly as to risk including unrelated code that might be accidentally altered or removed.
+        *   The AI assistant (Cline) is responsible for crafting these diffs with extreme care, especially in shared or complex files, and should double-check the diff's scope before proposing it.
