@@ -77,3 +77,14 @@ This document outlines the agreed-upon rules for the development of this project
         *   Current project rules in `briefing/RULES.md`.
     *   **Documentation as Diary:** Treat task files and the `COMPLETED_SETUP_LOG.md` as a living "project diary." Entries should be clear, concise, and capture not just *what* was done, but *why* and what was *learned*.
     *   **Onboarding:** This practice is critical for onboarding new members, allowing them to understand the project's history and rationale behind current states.
+
+---
+
+**10. Task-Based Commits for Traceability and Rollback:**
+    *   **Purpose:** To ensure all code changes are traceable to a specific task and to facilitate easier rollbacks or understanding of changes.
+    *   **Practice:**
+        *   All code modifications, configuration changes, and additions made as part of a defined task (from `briefing/tasks/`) should be committed to the Git repository.
+        *   Commit messages should ideally reference the Task ID (e.g., "Fix: Resolve icon display issue (Task 003)").
+        *   Major sub-steps within a complex task can also be committed incrementally.
+        *   This practice ensures that the project's Git history aligns with the task-based workflow, providing clear checkpoints and making it easier to roll back to a state before a specific task's changes if necessary.
+    *   **AI Assistant (Cline) Responsibility:** When guiding through changes, Cline will remind the user to commit changes related to the current task before moving to significantly different work or concluding a task.

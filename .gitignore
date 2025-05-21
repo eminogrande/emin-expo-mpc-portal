@@ -37,6 +37,6 @@ yarn-error.*
 *.tsbuildinfo
 
 # Expo Prebuild - allow app.config.ts to manage native folders
-# /ios/ temporarily re-included for build fix
+/ios/
 /android/
 /builds/
