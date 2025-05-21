@@ -3,6 +3,7 @@
 
 import React, { useState } from 'react';
 import { Text, View, StyleSheet, Button } from 'react-native';
+import * as SecureStore from 'expo-secure-store'; // Import SecureStore
 import { WalletProvider, useWallet } from './src/AuthContext'; // AuthContext.tsx now exports WalletProvider and useWallet
 import PortalStatusIndicator from './src/components/PortalStatusIndicator';
 import { portal } from './src/portal'; // Import the portal instance with named import
@@ -20,17 +21,31 @@ function InitialWalletSetupPlaceholder() {
       return;
     }
     setIsLoading(true);
-    setCreationStatusMessage('Creating wallet...');
+    setCreationStatusMessage('Testing SecureStore & Creating wallet...'); // Updated initial message
+
+    let secureStoreResult = '';
+    try {
+      await SecureStore.setItemAsync('testSecureKey', 'testSecureValue');
+      const value = await SecureStore.getItemAsync('testSecureKey');
+      secureStoreResult = `SecureStore Test SUCCESS - Value: ${value}`;
+      console.log('Task 012: SecureStore Test SUCCESS - Value:', value);
+    } catch (secureStoreError: any) {
+      secureStoreResult = `SecureStore Test ERROR: ${secureStoreError.message}`;
+      console.error('Task 012: SecureStore Test ERROR:', secureStoreError);
+      // Display SecureStore error and potentially stop before Portal call
+      setCreationStatusMessage(secureStoreResult);
+      setIsLoading(false);
+      return; // Stop if SecureStore fails
+    }
+
     try {
       console.log('Task 010: Attempting to call portal.createWallet...');
-      // Calling with no arguments, assuming defaults or that options are set elsewhere,
-      // or that the type 'ProgressCallback' means the options object is for progress.
       const response = await portal.createWallet();
       console.log('Task 010: portal.createWallet SUCCESS:', JSON.stringify(response, null, 2));
-      setCreationStatusMessage('SUCCESS: ' + JSON.stringify(response, null, 2));
+      setCreationStatusMessage(`${secureStoreResult}\nPortal SUCCESS: ${JSON.stringify(response, null, 2)}`);
     } catch (error) {
       console.error('Task 010: portal.createWallet ERROR:', error);
-      setCreationStatusMessage('ERROR: ' + (error instanceof Error ? error.message : String(error)));
+      setCreationStatusMessage(`${secureStoreResult}\nPortal ERROR: ${(error instanceof Error ? error.message : String(error))}`);
     } finally {
       setIsLoading(false);
     }
